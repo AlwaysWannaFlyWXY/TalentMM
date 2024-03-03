@@ -12,6 +12,8 @@ use App\Models\Industry;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\CompanyResource\Pages;
@@ -66,14 +68,23 @@ class CompanyResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
-                Forms\Components\Textarea::make('description'),
+                Forms\Components\RichEditor::make('description')->columnSpan(2),
                 Forms\Components\Textarea::make('location'),
                 Forms\Components\TextInput::make('no_of_offices')->integer(),
                 Forms\Components\TextInput::make('website'),
                 Forms\Components\TextInput::make('phone')->integer(),
                 Forms\Components\TextInput::make('logo'),
-                Forms\Components\Toggle::make('is_active')->onColor('success')->offColor('danger')->default(true),
-                Forms\Components\Toggle::make('is_featured')->onColor('success')->offColor('danger')->default(false),
+                Forms\Components\Toggle::make('is_featured')->inline(false)->onColor('success')->offColor('danger')->default(false),
+                Forms\Components\Toggle::make('is_active')->inline(false)->onColor('success')->offColor('danger')->default(true),
+                // Section::make('Publishing')
+                //     ->description('Settings for publishing this post.')
+                //     ->schema([
+                //         Select::make('is_active')
+                //             ->options([
+                //                 'true' => 'Publish',
+                //                 'false' => 'UnPublish',
+                //             ])->required(),
+                //     ]),
                 Forms\Components\TextInput::make('map'),
                 Forms\Components\TextInput::make('facebook_link'),
                 Forms\Components\TextInput::make('twitter_link'),

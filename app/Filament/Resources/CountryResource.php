@@ -25,6 +25,15 @@ class CountryResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return static::getModel()::count() > 10 ? 'warning' : 'success';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -32,6 +41,7 @@ class CountryResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('name_mm')->required(),
             ]);
     }
 

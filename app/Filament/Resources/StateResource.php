@@ -27,11 +27,21 @@ class StateResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return static::getModel()::count() > 10 ? 'success' : 'warning';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')->required(),
+                Forms\Components\TextInput::make('name_mm')->required(),
                 Forms\Components\Select::make('country_id')
                     ->relationship('country', 'name')
                     ->searchable()

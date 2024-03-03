@@ -34,7 +34,7 @@ class CityResource extends Resource
     }
     public static function getNavigationBadgeColor(): ?string
     {
-        return static::getModel()::count() > 10 ? 'warning' : 'success';
+        return static::getModel()::count() > 10 ? 'success' : 'warning';
     }
 
     public static function form(Form $form): Form
@@ -42,6 +42,7 @@ class CityResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')->required(),
+                Forms\Components\TextInput::make('name_mm')->required(),
                 Forms\Components\Select::make('country_id')
                     ->relationship('country', 'name')
                     ->searchable()
@@ -61,9 +62,10 @@ class CityResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                     ->label('ID'),
-                Tables\Columns\TextColumn::make('name')->label('State Name'),
-                Tables\Columns\TextColumn::make('state.name')->label('State Name'),
-                Tables\Columns\TextColumn::make('country.name')->label('Country Name'),
+                Tables\Columns\TextColumn::make('name')->label('State Name')->searchable(),
+                Tables\Columns\TextColumn::make('name_mm')->label('State Name MM')->searchable(),
+                Tables\Columns\TextColumn::make('state.name')->label('State Name')->searchable(),
+                Tables\Columns\TextColumn::make('country.name')->label('Country Name')->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
